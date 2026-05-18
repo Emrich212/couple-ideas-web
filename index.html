@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="情侣有趣产品灵感收集网页：筛选、搜索、收藏、备注视频拍法与品牌化想法。" />
+    <title>RichFia 情侣产品灵感库</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <nav class="topbar" aria-label="页面导航">
+          <a class="brand" href="#top" aria-label="RichFia 情侣产品灵感库首页">
+            <span class="brand-mark">💘</span>
+            <span>RichFia</span>
+          </a>
+          <div class="topbar-actions">
+            <a href="#collector" class="ghost-link">接入自动搜集</a>
+            <button id="favoritesOnlyBtn" class="pill-button" type="button" aria-pressed="false">只看收藏</button>
+          </div>
+        </nav>
+
+        <section id="top" class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">适合情侣账号 / 选品 / 短视频灵感</p>
+            <h1>情侣产品灵感工作台</h1>
+            <p class="hero-desc">
+              快速筛选、收藏和备注适合情侣账号参考的有趣产品。
+            </p>
+            <div class="hero-actions">
+              <a class="primary-button" href="#ideas">开始逛灵感</a>
+              <a class="secondary-button" href="#notes">查看备注说明</a>
+            </div>
+          </div>
+          <aside class="hero-card" aria-label="灵感统计">
+            <span class="floating-tag">今日脑洞</span>
+            <strong id="totalCount">0</strong>
+            <span>个灵感可查看</span>
+            <div class="mini-metrics">
+              <span><b id="favoriteCount">0</b> 收藏</span>
+              <span><b>5</b> 分类</span>
+              <span><b>∞</b> 备注想法</span>
+            </div>
+          </aside>
+        </section>
+      </header>
+
+      <main>
+        <section class="control-panel" aria-label="筛选和搜索产品灵感">
+          <div class="search-wrap">
+            <label for="searchInput">搜索关键词</label>
+            <div class="search-box">
+              <span aria-hidden="true">🔎</span>
+              <input id="searchInput" type="search" placeholder="搜：拍视频、搞笑、旅行、夜光、厨房……" autocomplete="off" />
+            </div>
+          </div>
+          <div class="category-wrap">
+            <span class="field-label">分类筛选</span>
+            <div id="categoryFilters" class="chips" role="list" aria-label="分类筛选"></div>
+          </div>
+        </section>
+
+        <section id="ideas" class="section-heading">
+          <div>
+            <p class="eyebrow">Product Inspiration</p>
+            <h2>情侣有趣产品灵感</h2>
+          </div>
+          <p id="resultText" class="result-text" aria-live="polite"></p>
+        </section>
+
+        <section id="productGrid" class="product-grid" aria-label="产品灵感列表"></section>
+        <section id="emptyState" class="empty-state" hidden>
+          <span>🧐</span>
+          <h3>暂时没有匹配的灵感</h3>
+          <p>换个关键词，或关闭“只看收藏”试试。</p>
+        </section>
+
+        <section id="notes" class="info-panel">
+          <div>
+            <p class="eyebrow">Notes</p>
+            <h2>灵感备注怎么用？</h2>
+            <p>
+              每张卡片底部都有备注框。你可以写：开箱脚本、情侣反差人设、30 秒视频钩子、可替换材质、包装风格、价格带、联名主题等。备注和收藏会保存在当前浏览器的 localStorage。
+            </p>
+          </div>
+          <div class="note-examples">
+            <span>🎬 “男友以为是整蛊，最后真香”</span>
+            <span>🎁 “做成七夕限定盲盒套装”</span>
+            <span>🛒 “改成自有品牌：极简透明包装”</span>
+          </div>
+        </section>
+
+        <section id="collector" class="collector-panel">
+          <div>
+            <p class="eyebrow">Next Step</p>
+            <h2>后续接入自动搜集 / 搜索</h2>
+            <p>
+              当前版本先实现前端页面、筛选、搜索、收藏和备注数据结构。要自动搜集真实网络产品，建议新增一个后端 API，定时调用商品搜索、联盟、内容平台或自建爬虫服务，再把结果转换成本页使用的 product schema。
+            </p>
+          </div>
+          <pre><code>{
+  id: "unique-product-id",
+  name: "产品名称",
+  category: "情侣互动",
+  imageUrl: "https://...",
+  highlight: "一句话亮点",
+  sourceName: "来源站点",
+  sourceUrl: "https://...",
+  tags: ["拍视频", "礼物", "反差感"]
+}</code></pre>
+        </section>
+      </main>
+    </div>
+
+    <template id="productCardTemplate">
+      <article class="product-card">
+        <div class="image-wrap">
+          <img alt="" loading="lazy" />
+          <button class="favorite-btn" type="button" aria-label="收藏产品">♡</button>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="category-badge"></span>
+            <a class="source-link" target="_blank" rel="noopener noreferrer">来源 ↗</a>
+          </div>
+          <h3></h3>
+          <p class="highlight"></p>
+          <div class="tags"></div>
+          <label class="note-label">
+            灵感备注
+            <textarea rows="3" placeholder="写下视频拍法、品牌化改造、包装/定价想法……"></textarea>
+          </label>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
